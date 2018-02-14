@@ -39,8 +39,14 @@ window.onload = function () {
 
 	var touchHandler = function (_event) {
 	 _event.preventDefault();
-	 logger.log(_event.touches);
-	 console.log(_event.touches)
+	 logger.log(_event);
+	 for(var p in _event) {
+		 if (window.hasOwnProperty(p)) {
+			 //console.log(p, _event[p])
+		 }
+		 console.log(p, _event[p])
+
+	 }
   };
 
   loggerContainer.addEventListener('touchstart', touchHandler);
