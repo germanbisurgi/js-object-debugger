@@ -1,5 +1,8 @@
-.logger {
+body {
     background: #2B3A42;
+}
+
+.logger {
     color: cyan;
     font-size: 10px;
 }
