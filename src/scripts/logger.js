@@ -15,60 +15,76 @@ var Logger = function(_container) {
 
         for (var i = 0; i < arguments.length; i++) {
             var value = arguments[i];
-            self.recursiveFunction(value);
+            self.recursiveFunction(value, true);
         }
 
         self.container.innerHTML += self.output;
 
     };
 
-    self.recursiveFunction = function (_value) {
+    self.recursiveFunction = function (_value, _print) {
 
         if (self.isNull(_value)) {
             var printedNull = self.printNull(_value)
-            self.output += printedNull;
+            if (_print) {
+                self.output += printedNull;
+            }
             return printedNull;
         }
 
         if (self.isUndefined(_value)) {
             var printedUndefined = self.printUndefined(_value);
-            self.output += printedUndefined;
+            if (_print) {
+                self.output += printedUndefined;
+            }
             return printedUndefined;
         }
 
         if (self.isBoolean(_value)) {
             var printedBoolean = self.printBoolean(_value);
-            self.output += printedBoolean
+            if (_print) {
+                self.output += printedBoolean
+            }
             return printedBoolean;
         }
 
         if (self.isNumber(_value)) {
             var printedNumber = self.printNumber(_value);
-            self.output += printedNumber
+            if (_print) {
+                self.output += printedNumber
+            }
             return printedNumber;
         }
 
         if (self.isString(_value)) {
             var printedString = self.printString(_value);
-            self.output += printedString
+            if (_print) {
+                self.output += printedString
+            }
             return printedString;
         }
 
         if (self.isFunction(_value)) {
             var printedFunction = self.printFunction(_value);
-            self.output += printedFunction
+            if (_print) {
+                self.output += printedFunction
+            }
             return printedFunction;
         }
 
         if (self.isArray(_value)) {
             var printedArray = self.printArray(_value);
-            self.output += printedArray
+            if (_print) {
+                self.output += printedArray
+            }
             return printedArray;
         }
 
         if (self.isObject(_value)) {
             var printedObject = self.printObject(_value);
-            self.output += printedObject
+            if (_print) {
+                self.output += printedObject
+            }
             return printedObject;
         }
 
@@ -180,10 +196,10 @@ var Logger = function(_container) {
     };
 
     self.printArray = function(_value) {
-        var output = '<span style="display: inline-block" class="logger-array">';
+        var output = '<pre style="display: inline.block;" class="logger-array">';
         output += '(' + _value.length + ') ';
-        output += JSON.stringify(_value, null, 4);
-        output += '</span style="display: inline-block">';
+        output += JSON.stringify(_value, null, 8);
+        output += '</pre>';
         output += '<br />';
         return output;
     };
@@ -191,27 +207,28 @@ var Logger = function(_container) {
     self.printObject = function(_value) {
         var output = '';
         self.recursive(_value, function (_key, _value, _path, _depth) {
-            output += '<li style="padding-left: ' + _depth * 20+ 'px;">'
+            if (_depth > 1) {
+                output += '<li style="padding-left: ' + _depth * 20 + 'px;">'
+            } else {
+                output += '<li>'
+            }
             output += _key;
             output += ': ';
-            if (!self.isObject(_value)) {
-                output += self.recursiveFunction(_value);
-            } else {
+
+            if (self.isObject(_value)) {
                 output += '<span style="display: inline-block;" class="logger-object">';
-                output += _value;
+                output += self.classOf(_value);
+                if (self.classOf(_value) !== 'Object') {
+                    output += ' => ' + JSON.stringify(_value, null, 4);
+                }
                 output += '</span>';
+            } else {
+                output += self.recursiveFunction(_value, false);
             }
+
             output += '</li>'
-            console.log('step');
         });
         return output;
-
-        /*output += '<span style="display: inline-block;" class="logger-object">';
-        //output += self.classOf(_value);
-        //if (self.classOf(_value) !== 'Object') {
-            //output += ' => ' + JSON.stringify(_value, null, 4);
-        //}
-        return output*/
     };
 
 };

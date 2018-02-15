@@ -4,33 +4,32 @@ window.onload = function() {
     var logger = new Logger(loggerContainer);
     var myFunction = function() {}
     var bla;
-    var myObject = {
-        propertyA_1: {
-            propertyA_2: {
-                null: null,
-                undefined: bla,
-                boolean: true,
-                number: 30,
-                string: 'string',
-                function: function() {},
-                array: [null, bla, true, 'string', 101, myFunction, {x: 30, y: {x: 30, y: 45}}],
-                instance: self.myIstance = new myFunction()
-            }
-        }
-    }
 
     logger.log(
         null,
         bla,
         true,
         101,
-        'string',
+        'string1',
         function() {},
-        [null, bla, true, 'string', 101, myFunction, {x: 30, y: {x: 30, y: 45}}],
-        myObject
+        [null, bla, true, 'string2', 101, myFunction, {x: 30, y: {x: 30, y: 45}}],
+        {
+            propertyA_1: {
+                propertyA_2: {
+                    null: null,
+                    undefined: bla,
+                    boolean: true,
+                    number: 30,
+                    string: 'string3',
+                    function: function() {},
+                    array: [null, bla, true, 'string4', 101, myFunction, {x: 30, y: {x: 30, y: 45}}],
+                    instance: self.myIstance = new myFunction()
+                }
+            }
+        }
     );
 
-    /*var tracked = [];
+    var tracked = [];
 
 	var touchHandler = function (_event) {
       _event.preventDefault();
@@ -50,12 +49,11 @@ window.onload = function() {
 			};
 		}
       logger.log(tracked);
-     console.log('something')
    };
 
    loggerContainer.addEventListener('touchstart', touchHandler, false);
    loggerContainer.addEventListener('touchmove', touchHandler, false);
-   loggerContainer.addEventListener('touchend', touchHandler, false);*/
+   loggerContainer.addEventListener('touchend', touchHandler, false);
 
 
 
