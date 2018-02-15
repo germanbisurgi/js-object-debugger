@@ -1,29 +1,36 @@
-window.onload = function () {
+window.onload = function() {
 
-   var loggerContainer = document.querySelector('.logger');
-   var logger = new Logger(loggerContainer);
+    var loggerContainer = document.querySelector('.logger');
+    var logger = new Logger(loggerContainer);
+    var myFunction = function() {}
+    var bla;
+    var myObject = {
+        propertyA_1: {
+            propertyA_2: {
+                null: null,
+                undefined: bla,
+                boolean: true,
+                number: 30,
+                string: 'string',
+                function: function() {},
+                array: [null, bla, true, 'string', 101, myFunction, {x: 30, y: {x: 30, y: 45}}],
+                instance: self.myIstance = new myFunction()
+            }
+        }
+    }
 
-   var myFunction = function () {}
+    logger.log(
+        null,
+        bla,
+        true,
+        101,
+        'string',
+        function() {},
+        [null, bla, true, 'string', 101, myFunction, {x: 30, y: {x: 30, y: 45}}],
+        myObject
+    );
 
-
-	var myObject = {
-		propertyA_1: {
-			propertyA_2: {
-				_null: null,
-				_undefined: undefined,
-				_function: function () {},
-	            _boolean: true,
-	            _string: 'bla bla',
-	            _number: 30,
-	            _array: ['banana', 'apple', {x: 30, y: 45}],
-				_instance: self.myIstance = new myFunction()
-			}
-		}
-	}
-	var bla;
-	logger.log(null, bla, true, 455, 'STRING', myFunction,  ['dada', 'dede', 110, {x: 30, y: {x: 30, y: 45}}, 225], myObject);
-
-	var tracked = [];
+    /*var tracked = [];
 
 	var touchHandler = function (_event) {
       _event.preventDefault();
@@ -48,11 +55,11 @@ window.onload = function () {
 
    loggerContainer.addEventListener('touchstart', touchHandler, false);
    loggerContainer.addEventListener('touchmove', touchHandler, false);
-   loggerContainer.addEventListener('touchend', touchHandler, false);
+   loggerContainer.addEventListener('touchend', touchHandler, false);*/
 
 
 
-	/* var depth = 1;
+    /* var depth = 1;
 	var maxDepth = 5;
 	var path = '';
 
