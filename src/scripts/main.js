@@ -1,6 +1,7 @@
 window.onload = function() {
 
     var loggerContainer = document.querySelector('.logger');
+    var touchableSurface = document.querySelector('.touchable-surface');
     var logger = new Logger(loggerContainer);
     var myFunction = function() {}
     var bla;
@@ -40,20 +41,14 @@ window.onload = function() {
 				startY: event.changedTouches[i].clientY,
 				currentX: event.changedTouches[i].clientX,
 				currentY: event.changedTouches[i].clientY,
-				offsetX: 0,
-				offsetY: 0,
-				justTouched: true,
-				touching: true,
-				released: false,
-				milliseconds: 0,
 			};
 		}
       logger.log(tracked);
    };
 
-   loggerContainer.addEventListener('touchstart', touchHandler, false);
-   loggerContainer.addEventListener('touchmove', touchHandler, false);
-   loggerContainer.addEventListener('touchend', touchHandler, false);
+   touchableSurface.addEventListener('touchstart', touchHandler, false);
+   touchableSurface.addEventListener('touchmove', touchHandler, false);
+   touchableSurface.addEventListener('touchend', touchHandler, false);
 
 
 
