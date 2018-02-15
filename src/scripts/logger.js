@@ -26,73 +26,35 @@ var Logger = function (_container) {
                  self.output += '<li class="logger-entry" style="margin-left: ' + _depth * 20 + 'px; list-style-type: disc;">';
 
                 if (self.isNull(_value)) {
-                   self.output += _key;
-                   self.output += ': ';
-                   self.output += '<span class="logger-null">';
-                  self.output += 'null';
-                  self.output += '</span>';
+                    self.printNull(_key, _value);
                 }
 
                 if (self.isUndefined(_value)) {
-                    self.output += _key;
-                    self.output += ': ';
-                    self.output += '<span class="logger-undefined">';
-                    self.output += '"undefined"';
-                    self.output += '</span>';
+                    self.printUndefined(_key, _value);
                 }
 
                 if (self.isBoolean(_value)) {
-                    self.output += _key;
-                    self.output += ': ';
-                    self.output += '<span class="logger-boolean">';
-                   self.output += _value;
-                   self.output += '</span>';
+                    self.printBoolean(_key, _value);
                 }
 
                 if (self.isNumber(_value)) {
-                    self.output += _key;
-                    self.output += ': ';
-                    self.output += '<span class="logger-number">';
-                   self.output += _value;
-                   self.output += '</span>';
+                    self.printNumber(_key, _value);
                 }
 
                 if (self.isString(_value)) {
-                    self.output += _key;
-                    self.output += ': ';
-                    self.output += '<span class="logger-string">';
-                    self.output += '"' + _value + '"';
-                    self.output += '</span>';
+                    self.printString(_key, _value);
                 }
 
                 if (self.isFunction(_value)) {
-                    self.output += _key;
-                    self.output += ': ';
-                    self.output += '<span class="logger-function">';
-                   self.output += _value;
-                   self.output += '</span>';
-
+                    self.printFunction(_key, _value);
                 }
 
                 if (self.isArray(_value)) {
-                    self.output += _key;
-                    self.output += ': ';
-                    self.output += '<span class="logger-array">';
-                    self.output += '(' + _value.length + ') ';
-                   self.output += JSON.stringify(_value, null, 4);
-                   self.output += '</span>';
+                    self.printArray(_key, _value);
                 }
 
                 if (self.isObject(_value)) {
-                    self.output += _key;
-                    self.output += ': ';
-                    self.output += '<span class="logger-object">';
-                    self.output += self.classOf(_value);
-
-                    if (self.classOf(_value) !== 'Object') {
-                        self.output += ' => ' + JSON.stringify(_value, null, 4);
-                    }
-                    self.output += '</span>';
+                    self.printObject(_key, _value);
                 }
 
                 self.output += '</li>';
@@ -106,47 +68,31 @@ var Logger = function (_container) {
             self.output += '<li class="logger-entry">';
 
             if (self.isNull(value)) {
-               self.output += '<span class="logger-null">';
-              self.output += 'null';
-              self.output += '</span>';
+                self.printNull(null, value)
             }
 
             if (self.isUndefined(value)) {
-                self.output += '<span class="logger-undefined">';
-                self.output += '"undefined"';
-                self.output += '</span>';
+                self.printUndefined(null, value)
             }
 
             if (self.isBoolean(value)) {
-                self.output += '<span class="logger-boolean">';
-               self.output += value;
-               self.output += '</span>';
+                self.printBoolean(null, value)
             }
 
             if (self.isNumber(value)) {
-                self.output += '<span class="logger-number">';
-               self.output += value;
-               self.output += '</span>';
+                self.printNumber(null, value)
             }
 
             if (self.isString(value)) {
-                self.output += '<span class="logger-string">';
-                self.output += '"' + value + '"';
-                self.output += '</span>';
+                self.printString(null, value)
             }
 
             if (self.isFunction(value)) {
-                self.output += '<span class="logger-function">';
-               self.output += value;
-               self.output += '</span>';
-
+                self.printFunction(null, value)
             }
 
             if (self.isArray(value)) {
-                self.output += '<span class="logger-array">';
-                self.output += '(' + value.length + ') ';
-               self.output += JSON.stringify(value, null, 4);
-               self.output += '</span>';
+                self.printArray(null, value)
             }
 
             self.output += '</li>';
@@ -215,6 +161,91 @@ var Logger = function (_container) {
 
    self.classOf = function (_value) {
       return _value.constructor.name;
+   };
+
+   self.printNull = function (_key, _value) {
+       if (_key) {
+           self.output += _key;
+           self.output += ': ';
+       }
+       self.output += '<pre style="display: inline-block" class="logger-null">';
+      self.output += 'null';
+      self.output += '</pre style="display: inline-block">';
+   };
+
+   self.printUndefined = function (_key, _value) {
+       if (_key) {
+           self.output += _key;
+           self.output += ': ';
+       }
+       self.output += '<pre style="display: inline-block" class="logger-undefined">';
+       self.output += '"undefined"';
+       self.output += '</pre style="display: inline-block">';
+   };
+
+   self.printBoolean = function (_key, _value) {
+       if (_key) {
+           self.output += _key;
+           self.output += ': ';
+       }
+       self.output += '<pre style="display: inline-block" class="logger-boolean">';
+      self.output += _value;
+      self.output += '</pre style="display: inline-block">';
+   };
+
+   self.printNumber = function (_key, _value) {
+       if (_key) {
+           self.output += _key;
+           self.output += ': ';
+       }
+       self.output += '<pre style="display: inline-block" class="logger-number">';
+      self.output += _value;
+      self.output += '</pre style="display: inline-block">';
+   };
+
+   self.printString = function (_key, _value) {
+       if (_key) {
+           self.output += _key;
+           self.output += ': ';
+       }
+       self.output += '<pre style="display: inline-block" class="logger-string">';
+       self.output += '"' + _value + '"';
+       self.output += '</pre style="display: inline-block">';
+   };
+
+   self.printFunction = function (_key, _value) {
+       if (_key) {
+           self.output += _key;
+           self.output += ': ';
+       }
+       self.output += '<pre style="display: inline-block" class="logger-function">';
+      self.output += _value;
+      self.output += '</pre style="display: inline-block">';
+   };
+
+   self.printArray = function (_key, _value) {
+       if (_key) {
+           self.output += _key;
+           self.output += ': ';
+       }
+       self.output += '<pre style="display: inline-block" class="logger-array">';
+       self.output += '(' + _value.length + ') ';
+      self.output += JSON.stringify(_value, null, 4);
+      self.output += '</pre style="display: inline-block">';
+   };
+
+   self.printObject = function (_key, _value) {
+       if (_key) {
+           self.output += _key;
+           self.output += ': ';
+       }
+       self.output += '<pre style="display: inline-block" class="logger-object">';
+       self.output += self.classOf(_value);
+
+       if (self.classOf(_value) !== 'Object') {
+           self.output += ' => ' + JSON.stringify(_value, null, 4);
+       }
+       self.output += '</pre style="display: inline-block">';
    };
 
 };
