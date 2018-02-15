@@ -11,69 +11,19 @@ var Logger = function (_container) {
       self.container.innerHTML = '';
       self.output = '';
 
-      console.log(arguments)
+      self.output += '<ul>';
 
       for (var i = 0; i < arguments.length; i++) {
 
          var value = arguments[i];
 
-         self.output += '<ul>';
-
-         if (self.isNull(value)) {
-            self.output += '<span class="logger-null">';
-           self.output += 'null';
-           self.output += '</span>';
-         }
-
-         if (self.isUndefined(value)) {
-             self.output += '<span class="logger-undefined">';
-             self.output += '"undefined"';
-             self.output += '</span>';
-         }
-
-         if (self.isString(value)) {
-             self.output += '<span class="logger-string">';
-             self.output += '"' + value + '"';
-             self.output += '</span>';
-         }
-
-         if (self.isBoolean(value)) {
-             self.output += '<span class="logger-boolean">';
-            self.output += value;
-            self.output += '</span>';
-         }
-
-         if (self.isNumber(value)) {
-             self.output += '<span class="logger-number">';
-            self.output += value;
-            self.output += '</span>';
-         }
-
-         if (self.isString(value)) {
-             self.output += '<span class="logger-string">';
-             self.output += '"' + value + '"';
-             self.output += '</span>';
-         }
-
-         if (self.isFunction(value)) {
-             self.output += '<span class="logger-function">';
-            self.output += value;
-            self.output += '</span>';
-
-         }
-
-         if (self.isArray(value)) {
-             self.output += '<span class="logger-array">';
-             self.output += '(' + value.length + ') ';
-            self.output += JSON.stringify(value, null, 4);
-            self.output += '</span>';
-         }
-
          if (self.isObject(value)) {
+
+             self.output += '{';
 
              self.recursive(value, function (_key, _value, _path, _depth) {
 
-                self.output += '<li class="logger-entry" style="margin-left: ' + _depth * 20 + 'px; list-style-type: square;">';
+                 self.output += '<li class="logger-entry" style="margin-left: ' + _depth * 20 + 'px; list-style-type: disc;">';
 
                 if (self.isNull(_value)) {
                    self.output += _key;
@@ -138,6 +88,7 @@ var Logger = function (_container) {
                     self.output += ': ';
                     self.output += '<span class="logger-object">';
                     self.output += self.classOf(_value);
+
                     if (self.classOf(_value) !== 'Object') {
                         self.output += ' => ' + JSON.stringify(_value, null, 4);
                     }
@@ -146,12 +97,64 @@ var Logger = function (_container) {
 
                 self.output += '</li>';
             });
+
+            self.output += '}';
+
+
+        } else {
+
+            self.output += '<li class="logger-entry">';
+
+            if (self.isNull(value)) {
+               self.output += '<span class="logger-null">';
+              self.output += 'null';
+              self.output += '</span>';
+            }
+
+            if (self.isUndefined(value)) {
+                self.output += '<span class="logger-undefined">';
+                self.output += '"undefined"';
+                self.output += '</span>';
+            }
+
+            if (self.isBoolean(value)) {
+                self.output += '<span class="logger-boolean">';
+               self.output += value;
+               self.output += '</span>';
+            }
+
+            if (self.isNumber(value)) {
+                self.output += '<span class="logger-number">';
+               self.output += value;
+               self.output += '</span>';
+            }
+
+            if (self.isString(value)) {
+                self.output += '<span class="logger-string">';
+                self.output += '"' + value + '"';
+                self.output += '</span>';
+            }
+
+            if (self.isFunction(value)) {
+                self.output += '<span class="logger-function">';
+               self.output += value;
+               self.output += '</span>';
+
+            }
+
+            if (self.isArray(value)) {
+                self.output += '<span class="logger-array">';
+                self.output += '(' + value.length + ') ';
+               self.output += JSON.stringify(value, null, 4);
+               self.output += '</span>';
+            }
+
+            self.output += '</li>';
         }
 
-        self.output += '</ul>';
-
-
       }
+
+      self.output += '</ul>';
 
       self.container.innerHTML += self.output;
 
