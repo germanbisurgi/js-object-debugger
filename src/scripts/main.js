@@ -34,8 +34,8 @@ window.onload = function () {
 			}
 		}
 	}
-
-	logger.log(myObject);
+	var bla;
+	logger.log(null, bla, true, 455, 'STRING', myFunction,  ['dada', 'dede', 110], myObject);
 
 
 	/* var depth = 1;

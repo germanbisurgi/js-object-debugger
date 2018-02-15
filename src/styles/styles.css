@@ -12,6 +12,10 @@ body {
     left: 0;
 }
 
+.logger-entry {
+    margin-bottom: 10px;
+}
+
 .logger-boolean {
     color: rgb(188, 163, 202);
 }
