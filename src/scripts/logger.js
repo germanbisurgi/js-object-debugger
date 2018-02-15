@@ -197,7 +197,6 @@ var Logger = function(_container) {
 
     self.printArray = function(_value) {
         var output = '<pre style="display: inline.block;" class="logger-array">';
-        output += '(' + _value.length + ') ';
         output += JSON.stringify(_value, null, 8);
         output += '</pre>';
         output += '<br />';
