@@ -35,23 +35,7 @@ window.onload = function () {
 		}
 	}
 
-	//logger.log(myObject);
-
-	var touchHandler = function (_event) {
-	 _event.preventDefault();
-	 logger.log(_event);
-	 for(var p in _event) {
-		 if (window.hasOwnProperty(p)) {
-			 //console.log(p, _event[p])
-		 }
-		 console.log(p, _event[p])
-
-	 }
-  };
-
-  loggerContainer.addEventListener('touchstart', touchHandler);
-  //loggerContainer.addEventListener('touchmove', touchHandler);
-  //loggerContainer.addEventListener('touchend', touchHandler);
+	logger.log(myObject);
 
 
 	/* var depth = 1;
