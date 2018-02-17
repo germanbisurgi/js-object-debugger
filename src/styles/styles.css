@@ -1,13 +1,14 @@
 .touchable-surface {
-    background: #2B3A42;
     height: 100vh;
     width: 100vw;
 }
 
 .logger {
-    color: white;
+    background: rgba(0, 0, 0, 0.8);
+    color: magenta;
     font-family: monospace;
-    font-size: 10px;
+    font-size: 11px;
+    overflow: hidden;
     padding: 15px;
     pointer-events: none;
     position: fixed;
@@ -15,6 +16,34 @@
     right: 0;
     bottom: 0;
     left: 0;
+}
+
+.logger-controls {
+    position: fixed;
+    right: 30px;
+    bottom: 50%;
+    transform: translate(0%, 50%);
+    width: 100px;
+}
+
+.logger-control {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 3px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    padding: 5px;
+    text-align: center;
+    width: 100%;
+}
+
+.logger-range {
+    /*transform-origin: 75px 75px;
+    transform: rotate(90deg);*/
+    width: 100%;
+}
+
+.logger-control:hover {
+    background: rgba(255, 255, 255, 1);
 }
 
 .logger-entry {
@@ -46,7 +75,7 @@
 }
 
 .logger-function {
-    color: green;
+    color: rgb(0, 255, 204);
 }
 
 .logger-array {

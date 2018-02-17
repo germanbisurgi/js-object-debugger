@@ -51,6 +51,37 @@ window.onload = function() {
    touchableSurface.addEventListener('touchend', touchHandler, false);
 
 
+   var loggerElement = document.querySelector('.logger');
+   var loggerDeeper = document.querySelector('.logger-deeper');
+   var loggerShallower = document.querySelector('.logger-shallower');
+   var loggerRange = document.querySelector('.logger-range');
+   var scrollingUp = false;
+   var scrollingDown = false;
+   loggerDeeper.onmousedown = function (_event) {
+       _event.preventDefault();
+       logger.goDeeper();
+       logger.refresh();
+   }
+   loggerShallower.onmousedown = function (_event) {
+       _event.preventDefault();
+       logger.goShallower();
+       logger.refresh();
+   }
+   loggerDeeper.ontouchstart = function (_event) {
+       _event.preventDefault();
+       logger.goDeeper();
+       logger.refresh();
+   }
+   loggerShallower.ontouchstart = function (_event) {
+       _event.preventDefault();
+       logger.goShallower();
+       logger.refresh();
+   }
+   loggerRange.oninput = function (_event) {
+       loggerElement.scrollTop = (loggerElement.scrollHeight - window.innerHeight) * _event.target.value;
+   }
+
+
 
     /* var depth = 1;
 	var maxDepth = 5;

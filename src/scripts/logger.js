@@ -4,22 +4,27 @@ var Logger = function(_container) {
     self.container = _container;
     self.output = '';
     self.depth = 1;
-    self.maxDepth = 10;
+    self.maxDepth = 1;
     self.path = '';
+    self.arguments = null;
 
     self.log = function() {
+        self.arguments = arguments;
+        self.exec();
+    };
 
+    self.refresh = function () {
+        self.exec();
+    };
+
+    self.exec = function () {
         self.container.innerHTML = '';
-
         self.output = '';
-
-        for (var i = 0; i < arguments.length; i++) {
-            var value = arguments[i];
+        for (var i = 0; i < self.arguments.length; i++) {
+            var value = self.arguments[i];
             self.recursiveFunction(value, true);
         }
-
         self.container.innerHTML += self.output;
-
     };
 
     self.recursiveFunction = function (_value, _print) {
@@ -89,6 +94,17 @@ var Logger = function(_container) {
         }
 
     }
+
+    self.goDeeper = function(_value) {
+        self.maxDepth++;
+    };
+
+    self.goShallower = function(_value) {
+        self.maxDepth--;
+        if (self.maxDepth < 1) {
+            self.maxDepth = 1;
+        }
+    };
 
     self.recursive = function(_object, _function) {
         for (var _property in _object) {
@@ -189,7 +205,8 @@ var Logger = function(_container) {
 
     self.printFunction = function(_value) {
         var output = '<span style="display: inline-block" class="logger-function">';
-        output += _value;
+        //output += _value;
+        output += 'function';
         output += '</span style="display: inline-block">';
         output += '<br />';
         return output;
@@ -197,7 +214,7 @@ var Logger = function(_container) {
 
     self.printArray = function(_value) {
         var output = '<pre style="display: inline.block;" class="logger-array">';
-        output += JSON.stringify(_value, null, 8);
+        output += self.stringify(_value, null, 8);
         output += '</pre>';
         output += '<br />';
         return output;
@@ -218,7 +235,8 @@ var Logger = function(_container) {
                 output += '<span style="display: inline-block;" class="logger-object">';
                 output += self.classOf(_value);
                 if (self.classOf(_value) !== 'Object') {
-                    output += ' => ' + JSON.stringify(_value, null, 4);
+                    //output += ' => ' + self.stringify(_value, null, 4);
+                    output += ' {} '
                 }
                 output += '</span>';
             } else {
@@ -228,6 +246,67 @@ var Logger = function(_container) {
             output += '</li>'
         });
         return output;
+    };
+
+    self.stringify = function (obj, replacer, indent) {
+        var printedObjects = [];
+        var printedObjectKeys = [];
+
+        function printOnceReplacer(key, value) {
+            // browsers will not print more than 20K, I don't see the point to
+            // allow 2K.. algorithm will not be fast anyway if we have too many objects
+            if (printedObjects.length > 2000) {
+                return 'object too long';
+            }
+
+            var printedObjIndex = false;
+
+            printedObjects.forEach(function (obj, index) {
+
+                if (obj === value) {
+                    printedObjIndex = index;
+                }
+
+            });
+
+            //root element
+            if ( key === '') {
+
+                 printedObjects.push(obj);
+                 printedObjectKeys.push('root');
+                 return value;
+
+            } else if (printedObjIndex + '' !== 'false' && typeof(value) === 'object') {
+
+                if ( printedObjectKeys[printedObjIndex] == 'root') {
+
+                    return '(pointer to root)';
+
+                } else {
+
+                    return '(see ' + ((!!value && !!value.constructor) ? value.constructor.name.toLowerCase()  : typeof(value)) + ' with key ' + printedObjectKeys[printedObjIndex] + ')';
+
+                }
+
+            } else {
+
+                var qualifiedKey = key || '(empty key)';
+                printedObjects.push(value);
+                printedObjectKeys.push(qualifiedKey);
+
+                if (replacer) {
+
+                    return replacer(key, value);
+
+                } else {
+
+                    return value;
+
+                }
+
+            }
+        }
+        return JSON.stringify(obj, printOnceReplacer, indent);
     };
 
 };
