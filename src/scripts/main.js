@@ -78,7 +78,8 @@ window.onload = function() {
        logger.refresh();
    }
    loggerRange.oninput = function (_event) {
-       loggerElement.scrollTop = (loggerElement.scrollHeight - window.innerHeight) * _event.target.value;
+       loggerElement.scrollTop = Math.floor((loggerElement.scrollHeight - window.innerHeight) * _event.target.value);
+       console.log(loggerElement.scrollTop)
    }
 
 
