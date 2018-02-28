@@ -1,71 +1,77 @@
-window.onload = function () {
-
-	var loggerContainer = document.querySelector('.logger');
-	var touchableSurface = document.querySelector('.touchable-surface');
-	var logger = new Logger(loggerContainer);
-	var myFunction = function () {};
-	var bla;
-
-	logger.log(
-		null,
-		bla,
-		true,
-		101,
-		'string1',
-		function () {}, [null, bla, true, 'string2', 101, myFunction, {
-			x: 30,
-			y: {
-				x: 30,
-				y: 45
-			}
-		}], {
-			propertyA_1: {
-				propertyA_2: {
-					null: null,
-					undefined: bla,
-					boolean: true,
-					number: 30,
-					string: 'string3',
-					function: function () {},
-					array: [null, bla, true, 'string4', 101, myFunction, {
-						x: 30,
-						y: {
-							x: 30,
-							y: 45
-						}
-					}],
-					instance: self.myIstance = new myFunction()
-				}
-			}
-		}
-	);
-
-	var loggerElement = document.querySelector('.logger');
-	var loggerDeeper = document.querySelector('.logger-deeper');
-	var loggerShallower = document.querySelector('.logger-shallower');
-	var loggerRange = document.querySelector('.logger-range');
-	loggerDeeper.onmousedown = function (_event) {
-		_event.preventDefault();
-		logger.goDeeper();
-		logger.refresh();
-	};
-	loggerShallower.onmousedown = function (_event) {
-		_event.preventDefault();
-		logger.goShallower();
-		logger.refresh();
-	};
-	loggerDeeper.ontouchstart = function (_event) {
-		_event.preventDefault();
-		logger.goDeeper();
-		logger.refresh();
-	};
-	loggerShallower.ontouchstart = function (_event) {
-		_event.preventDefault();
-		logger.goShallower();
-		logger.refresh();
-	};
-	loggerRange.oninput = function (_event) {
-		loggerElement.scrollTop = Math.floor((loggerElement.scrollHeight - window.innerHeight) * _event.target.value);
-	};
-
+var MyCLass = function () {
+	this.iterableProperty = [
+		'v0',
+		'v1',
+		'v2'
+	];
+	this.property = 'a property';
+	this.aFunction = function () {};
 };
+
+var CircularClass = function (){
+	this.name = 'circular class';
+	this.reference = this;
+};
+
+var circular = new CircularClass();
+
+var object = {
+	live: {
+		x: 0,
+		y: 0
+	},
+	circularClass: circular,
+	array: [
+		'v0',
+		'v1',
+		'v2',
+		circular
+	],
+	instance: new MyCLass(),
+	null: null,
+	undefined: undefined,
+	boolean: true,
+	number: 101,
+	string: 'some string',
+	function: MyCLass,
+	date: new Date(),
+	regexp: /^\d+$/,
+	promise: new Promise(function (resolve, reject) { /**/ })
+};
+
+
+
+var loggerElement = document.querySelector('.logger');
+var loggerDeeper = document.querySelector('.logger-deeper');
+var loggerShallower = document.querySelector('.logger-shallower');
+var loggerRange = document.querySelector('.logger-range');
+var myLogger = new Logger(document.querySelector('.logger'));
+myLogger.print(object);
+
+
+loggerDeeper.onmousedown = function (_event) {
+	_event.preventDefault();
+	myLogger.goDeeper();
+};
+loggerShallower.onmousedown = function (_event) {
+	_event.preventDefault();
+	myLogger.goShallower();
+};
+loggerDeeper.ontouchstart = function (_event) {
+	_event.preventDefault();
+	myLogger.goDeeper();
+};
+loggerShallower.ontouchstart = function (_event) {
+	_event.preventDefault();
+	myLogger.goShallower();
+};
+loggerRange.oninput = function (_event) {
+	loggerElement.scrollTop = Math.floor((loggerElement.scrollHeight - window.innerHeight) * _event.target.value);
+};
+document.addEventListener('mousemove', function (event) {
+	myLogger.set(object, 'date', new Date());
+	myLogger.set(object, 'live.x', event.clientX);
+	myLogger.set(object, 'live.y', event.clientY);
+	myLogger.print(object);
+});
+

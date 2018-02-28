@@ -1,15 +1,9 @@
-.touchable-surface {
-    height: 100vh;
-    width: 100vw;
-}
-
 .logger {
     background: rgba(0, 0, 0, 0.8);
     color: magenta;
     font-family: monospace;
-    font-size: 11px;
     overflow: hidden;
-    padding: 15px;
+    padding: 30px;
     pointer-events: none;
     position: fixed;
     top: 0;
@@ -46,38 +40,18 @@
     background: rgba(255, 255, 255, 1);
 }
 
-.logger-entry {
-    margin: 5px 0;
+p {
+    padding: 5px;
 }
 
-.logger-boolean {
-    color: rgb(188, 163, 202);
+.output {
+    background: rgba(0, 0, 0, 0.7);
 }
 
-.logger-undefined {
-    color: grey;
+.logger-key {
+    color: magenta;
 }
 
-.logger-null {
-    color: grey;
-}
-
-.logger-object {
-    color: #F1E293;
-}
-
-.logger-number {
-    color: rgb(156, 180, 219);
-}
-
-.logger-string {
-    color: rgb(227, 151, 154);
-}
-
-.logger-function {
-    color: rgb(0, 255, 204);
-}
-
-.logger-array {
+.logger-value {
     color: cyan;
 }
