@@ -8,7 +8,7 @@ var MyCLass = function () {
 	this.aFunction = function () {};
 };
 
-var CircularClass = function (){
+var CircularClass = function () {
 	this.name = 'circular class';
 	this.reference = this;
 };
@@ -39,15 +39,11 @@ var object = {
 	promise: new Promise(function (resolve, reject) { /**/ })
 };
 
-
-
 var loggerElement = document.querySelector('.logger');
 var loggerDeeper = document.querySelector('.logger-deeper');
 var loggerShallower = document.querySelector('.logger-shallower');
 var loggerRange = document.querySelector('.logger-range');
 var myLogger = new Logger(document.querySelector('.logger'));
-myLogger.print(object);
-
 
 loggerDeeper.onmousedown = function (_event) {
 	_event.preventDefault();
@@ -68,10 +64,16 @@ loggerShallower.ontouchstart = function (_event) {
 loggerRange.oninput = function (_event) {
 	loggerElement.scrollTop = Math.floor((loggerElement.scrollHeight - window.innerHeight) * _event.target.value);
 };
+
 document.addEventListener('mousemove', function (event) {
 	myLogger.set(object, 'date', new Date());
 	myLogger.set(object, 'live.x', event.clientX);
 	myLogger.set(object, 'live.y', event.clientY);
-	myLogger.print(object);
 });
+
+function step (timestamp) {
+	myLogger.print(object);
+	// window.requestAnimationFrame(step);
+}
+window.requestAnimationFrame(step);
 
