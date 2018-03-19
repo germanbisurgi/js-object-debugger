@@ -112,7 +112,9 @@ var Logger = function (_outputContainer) {
 		});
 	};
 
-	self.print = function (_object) {
+	self.print = function (_object, maxDepth) {
+
+		self.maxDepth = maxDepth || 1;
 
 		self.output = '';
 		var lastDepth = 1;

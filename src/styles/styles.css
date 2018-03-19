@@ -31,17 +31,11 @@
 }
 
 .logger-range {
-    /*transform-origin: 75px 75px;
-    transform: rotate(90deg);*/
     width: 100%;
 }
 
 .logger-control:active {
     background: rgba(255, 255, 255, 1);
-}
-
-p {
-    padding: 5px;
 }
 
 .output {

@@ -40,27 +40,9 @@ var object = {
 };
 
 var loggerElement = document.querySelector('.logger');
-var loggerDeeper = document.querySelector('.logger-deeper');
-var loggerShallower = document.querySelector('.logger-shallower');
 var loggerRange = document.querySelector('.logger-range');
 var myLogger = new Logger(document.querySelector('.logger'));
 
-loggerDeeper.onmousedown = function (_event) {
-	_event.preventDefault();
-	myLogger.goDeeper();
-};
-loggerShallower.onmousedown = function (_event) {
-	_event.preventDefault();
-	myLogger.goShallower();
-};
-loggerDeeper.ontouchstart = function (_event) {
-	_event.preventDefault();
-	myLogger.goDeeper();
-};
-loggerShallower.ontouchstart = function (_event) {
-	_event.preventDefault();
-	myLogger.goShallower();
-};
 loggerRange.oninput = function (_event) {
 	loggerElement.scrollTop = Math.floor((loggerElement.scrollHeight - window.innerHeight) * _event.target.value);
 };
@@ -72,8 +54,8 @@ document.addEventListener('mousemove', function (event) {
 });
 
 function step (timestamp) {
-	myLogger.print(object);
-	// window.requestAnimationFrame(step);
+	myLogger.print(object, 3);
+	window.requestAnimationFrame(step);
 }
 window.requestAnimationFrame(step);
 
