@@ -1,4 +1,4 @@
-var Logger = function (_outputContainer) {
+var ObjectDebugger = function (_outputContainer) {
 	'use strict';
 	var self = this;
 

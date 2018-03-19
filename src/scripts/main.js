@@ -41,20 +41,21 @@ var object = {
 
 var loggerElement = document.querySelector('.logger');
 var loggerRange = document.querySelector('.logger-range');
-var myLogger = new Logger(document.querySelector('.logger'));
+var objectDebugger = new ObjectDebugger(document.querySelector('.logger'));
 
 loggerRange.oninput = function (_event) {
 	loggerElement.scrollTop = Math.floor((loggerElement.scrollHeight - window.innerHeight) * _event.target.value);
 };
 
 document.addEventListener('mousemove', function (event) {
-	myLogger.set(object, 'date', new Date());
-	myLogger.set(object, 'live.x', event.clientX);
-	myLogger.set(object, 'live.y', event.clientY);
+	objectDebugger.set(object, 'live.x', event.clientX);
+	objectDebugger.set(object, 'live.y', event.clientY);
 });
 
 function step (timestamp) {
-	myLogger.print(object, 3);
+	objectDebugger.set(object, 'date', new Date());
+	objectDebugger.set(object, 'timestamp', timestamp);
+	objectDebugger.print(object, 3);
 	window.requestAnimationFrame(step);
 }
 window.requestAnimationFrame(step);
