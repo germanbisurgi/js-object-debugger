@@ -39,9 +39,9 @@ var object = {
 	promise: new Promise(function (resolve, reject) { /**/ })
 };
 
-var loggerElement = document.querySelector('.logger');
-var loggerRange = document.querySelector('.logger-range');
-var objectDebugger = new ObjectDebugger(document.querySelector('.logger'));
+var loggerElement = document.querySelector('.output');
+var loggerRange = document.querySelector('.output-range');
+var objectDebugger = new ObjectDebugger(document.querySelector('.output'));
 
 loggerRange.oninput = function (_event) {
 	loggerElement.scrollTop = Math.floor((loggerElement.scrollHeight - window.innerHeight) * _event.target.value);

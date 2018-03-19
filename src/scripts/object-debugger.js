@@ -28,7 +28,6 @@ var ObjectDebugger = function (_outputContainer) {
 		}
 	};
 
-	// executes a function for every node. Function (key, value, path, depth) {}
 	self.walk = function (_object, _function) {
 		self.seen = [];
 		self.recursive(_object, _function);
@@ -120,37 +119,23 @@ var ObjectDebugger = function (_outputContainer) {
 		var lastDepth = 1;
 		var lastIterable = null;
 
-		self.output += '<p class="logger-value">';
+		self.output += '<p class="object-debugger-value">';
 		self.output += self.isArray(_object) ? ' [' : ' {';
 		self.output += '</p>';
 
 		self.walk(_object, function (_key, _value, _path, _depth, _circular) {
 
-			// TODO check this
-			// if going shallower
 			if (lastDepth > _depth) {
-				self.output += '<p class="logger-value" style="padding-left: ' + _depth * 30 + 'px;">';
+				self.output += '<p class="object-debugger-value" style="padding-left: ' + _depth * 30 + 'px;">';
 				self.output += self.isArray(lastIterable) ? ']' : '}';
 				self.output += '</p>';
 			}
 
-			/* if (lastDepth - _depth === 1) {
-			   self.output += '<p class="logger-value" style="padding-left: ' + _depth * 30 + 'px;">';
-			   self.output += self.isArray(lastIterable) ? ']' : '}';
-			   self.output += '</p>';
-			} else {
-			   for (var i = lastDepth - _depth; i > 0; i--) {
-				  self.output += '<p class="logger-value" style="padding-left: ' + i * 30 + 'px;">';
-				  self.output += self.isArray(lastIterable) ? ']' : '}';
-				  self.output += '</p>';
-			   }
-			} */
-
 			self.output += '<p style="padding-left: ' + _depth * 30 + 'px;">';
 
 			if (self.isIterable(_value)) {
-				self.output += '<span class="logger-key">' + _key + ': ' + '</span>';
-				self.output += '<span class="logger-value">';
+				self.output += '<span class="object-debugger-key">' + _key + ': ' + '</span>';
+				self.output += '<span class="object-debugger-value">';
 				self.output += self.printIterables(_value, _circular);
 				if (!_circular) {
 					self.output += self.isArray(_value) ? ' [' : ' {';
@@ -161,15 +146,15 @@ var ObjectDebugger = function (_outputContainer) {
 				self.output += '</span>';
 				lastIterable = _value;
 			} else {
-				self.output += '<span class="logger-key">' + _key + ': ' + '</span>';
-				self.output += '<span class="logger-value">' + self.printNonIterables(_value) + '</span>';
+				self.output += '<span class="object-debugger-key">' + _key + ': ' + '</span>';
+				self.output += '<span class="object-debugger-value">' + self.printNonIterables(_value) + '</span>';
 			}
 
 			self.output += '</p>';
 
 			// closing literal of the root object
 			if (_path.join('.') === self.paths[self.paths.length - 1]) {
-				self.output += '<p class="logger-value" style="padding-left: 30px;">';
+				self.output += '<p class="object-debugger-value" style="padding-left: 30px;">';
 				self.output += self.isArray(_value) ? ']' : '}';
 				self.output += '</p>';
 			}
@@ -177,7 +162,7 @@ var ObjectDebugger = function (_outputContainer) {
 			lastDepth = _depth;
 		});
 
-		self.output += '<p class="logger-value">';
+		self.output += '<p class="object-debugger-value">';
 		self.output += self.isArray(_object) ? ']' : '}';
 		self.output += '</p>';
 
