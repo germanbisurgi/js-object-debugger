@@ -1,4 +1,4 @@
 # loggerJS
 &lt;3
 
-[demo](https://germanbisurgi.github.io/loggerJS/)
+[demo](https://germanbisurgi.github.io/js-object-debugger/)
