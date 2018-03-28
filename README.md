@@ -14,20 +14,14 @@ traversed but the object name will be printed between square brackets.
 ## How it works
 
 ```javascript
-// The element that will be injected with the object debugger output.
-var output = document.querySelector('.output');
+var objectDebugger = new ObjectDebugger(document.querySelector('.output'));
 
-// Object debbugger instance.
-var objectDebugger = new ObjectDebugger(output);
-
-// an object.
 var object = {
     string: 'a string',
     number: 'number',
 }
 
-// print the object and set a max depth
-objectDebugger.print(object, 3);
+objectDebugger.print(object, 3); // 3 is the max depth
 ```
 
 ## Customize output
@@ -35,17 +29,11 @@ Output Keys and values have css classes for easy styling. Object debugger does
 not produce the output container but it would be a good idea to style it also.
 
 ```css
-.object-debugger-key {
-    color: magenta;
-}
-
-.object-debugger-value {
-    color: cyan;
-}
-
 .output {
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
     font-family: monospace;
+    font-size: 14px;
     overflow: auto;
     padding: 30px;
     position: fixed;
@@ -53,5 +41,17 @@ not produce the output container but it would be a good idea to style it also.
     right: 0;
     bottom: 0;
     left: 0;
+}
+
+.output.active {
+    display: block;
+}
+
+.object-debugger-key {
+    color: magenta;
+}
+
+.object-debugger-value {
+    color: cyan;
 }
 ```
